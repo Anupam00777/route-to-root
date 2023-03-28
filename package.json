@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "vite"
-  },
-  "type": "module",
+  }, 
   "author": "Anupam Pandey",
   "license": "ISC",
   "devDependencies": {

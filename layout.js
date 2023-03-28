@@ -16,7 +16,11 @@ export class layout extends calculator{
     }
 
     write_ans(str){
-        this.ans.innerHTML += str;
+        this.ans.innerHTML = str;
+    }
+    
+    clear_ans(){
+        this.ans.innerHTML = '';
     }
 
     append_layout(){
@@ -53,7 +57,7 @@ export class layout extends calculator{
         <input type="number" id="x3${layout_num}" placeholder="x3" class="w-[70%] h-full border-0 text-center outline-0" ></div> 
         </div>`;
         
-        let ans = `<div id="ans${layout_num}" class="flex w-full pl-8 h-max py-2 text-sm text-clip flex-wrap">
+        let ans = `<div id="ans${layout_num}" class="w-full pl-8 h-max py-2 text-sm text-clip">
         </div>`
         
         this.parent.innerHTML += container;
@@ -69,6 +73,6 @@ export class layout extends calculator{
         this.x3_input = document.querySelector(`#x3${layout_num}`);
         this.solve_btn = document.querySelector(`#solve${layout_num}`);
 
-        this.ans = document.querySelector(`ans${layout_num}`);
+        this.ans = document.querySelector(`#ans${layout_num}`);
     } 
 } 
