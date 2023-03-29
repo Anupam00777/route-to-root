@@ -73,8 +73,8 @@ class Bisection extends layout {
     let s = eval(c);
     let E = eval(n);
     let temp = {
-      x: { this: "", to_this: "", val: 0 },
-      f: { this: "", to_this: "", val: 0 },
+      x: { var: "", this: "", to_this: "", val: 0 },
+      f: { var: "", this: "", to_this: "", val: 0 },
     };
     this.write_to_screen(`<b>ITERATION 1 :</b><br>`);
     while (this.stop(s, E)) {
@@ -84,9 +84,15 @@ class Bisection extends layout {
       this.f1 = this.fx(this.x1);
       this.f2 = this.fx(this.x2);
       if (this.iteration_num != 1) {
-        this.write_to_screen(
-          `<b>ITERATION ${this.iteration_num} :</b><br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
-        );
+        if (temp.x.var == "x1") {
+          this.write_to_screen(
+            `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>2</sub> = ${this.x2}<br>f(x<sub>2</sub>) = ${this.f2}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
+          );
+        } else if (temp.x.var == "x2") {
+          this.write_to_screen(
+            `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>1</sub> = ${this.x1}<br>f(x<sub>1</sub>) = ${this.f1}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
+          );
+        }
       }
       this.write_to_screen(
         `x<sub>0</sub> = (x<sub>1</sub> + x<sub>2</sub>)/2<br>x<sub>0</sub> = (${this.x1} + ${this.x2})/2<br>x<sub>0</sub> = ${this.x0}<br><br>f(x<sub>0</sub>) = ${this.eqn}<br>f(x<sub>0</sub>) = ${this.f0}<br><br>`
@@ -101,11 +107,13 @@ class Bisection extends layout {
         );
         this.x2 = this.x0;
         temp.x = {
+          var: `x2`,
           this: `x<sub>2</sub>`,
           to_this: `x<sub>0</sub>`,
           val: this.x0,
         };
         temp.f = {
+          var: `f2`,
           this: `f(x<sub>2</sub>)`,
           to_this: `f(x<sub>0</sub>)`,
           val: this.f0,
@@ -116,11 +124,13 @@ class Bisection extends layout {
         );
         this.x1 = this.x0;
         temp.x = {
+          var: `x1`,
           this: `x<sub>1</sub>`,
           to_this: `x<sub>0</sub>`,
           val: this.x0,
         };
         temp.f = {
+          var: `f1`,
           this: `f(x<sub>1</sub>)`,
           to_this: `f(x<sub>0</sub>)`,
           val: this.f0,
@@ -173,7 +183,11 @@ class Bisection extends layout {
         return;
       }
       this.write_to_screen(
-        `&emsp;x<sub>1</sub> = ${this.x2}1<br>&emsp;x<sub>2</sub> = ${this.x2}<br><br>`
+        `&emsp;x<sub>1</sub> = ${this.x2}<br>&emsp;x<sub>2</sub> = ${
+          this.x2
+        }<br>&emsp;f(x<sub>1</sub>) = ${this.fx(
+          this.x1
+        )}<br>&emsp;f(x<sub>2</sub>) = ${this.fx(this.x2)}<br><br>`
       );
     }
     this.stopping_criterion = this.stopCr_container.value;
