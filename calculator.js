@@ -36,6 +36,18 @@ export class calculator {
     }
   }
 
+  checknum(test, range = null) {
+    if (test == NaN || test == undefined) {
+      if (range) {
+        if (range[0] > test || range[1] < test) {
+          return false;
+        }
+      }
+      return false;
+    }
+    return true;
+  }
+
   calculate(e, val) {
     let eq = e;
     let reg;
@@ -90,7 +102,7 @@ export class calculator {
         }
         reg = new RegExp(`${element.var}`);
         eq = eq.replace(reg, element.val);
-        console.log(eq);
+        //console.log(eq);
       }
     });
     for (let i = 0; i < eq.length; i++) {
@@ -105,13 +117,13 @@ export class calculator {
           i++;
         }
       }
-      console.log(eq);
+      //console.log(eq);
     }
     return eval(eq);
   }
 }
 
 // const cc = new calculator();
-// console.log(cc.calculate("x^2-4(x)-10",[
+// //console.log(cc.calculate("x^2-4(x)-10",[
 //     {var: "x", val: "(5-1)"}
 // ]))

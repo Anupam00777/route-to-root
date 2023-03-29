@@ -59,7 +59,7 @@ export class layout extends calculator {
         <input type="number" id="x3${layout_num}" placeholder="x3" class="w-[70%] h-full border-0 text-center outline-0" ></div> 
         </div>`;
 
-    let ans = `<div id="ans${layout_num}" class="w-full pl-8 h-max py-2 text-sm text-clip">
+    let ans = `<div id="ans${layout_num}" class="w-full pl-8 min-h-[300px] h-max py-2 text-sm text-clip">
         </div>`;
 
     this.parent.innerHTML += container;

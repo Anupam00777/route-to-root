@@ -1,6 +1,6 @@
 import { layout } from "./layout";
 
-class Bisection extends layout {
+class false_position extends layout {
   constructor(parent, callback = null) {
     super(parent);
     this.solve_btn.addEventListener("click", () => {
@@ -163,14 +163,14 @@ class Bisection extends layout {
     if (this.x1 == "" || this.x2 == "") {
       this
         .write_to_screen(`Since x<sub>1</sub> and x<sub>2</sub> are not given, we will find the interval using following formula:<br>We know that:<br><br>|x<sub>max</sub><sup>*</sup>| = <span style="white-space: nowrap;">
-            &radic;<span class="border-t border-black">&nbsp;(a<sub>n-1</sub>/a<sub>n</sub>)<sup>2</sup> - 2(a<sub>n-2</sub>/a<sub>n</sub>)&nbsp;</span>
-            </span><br><br>`);
+                &radic;<span class="border-t border-black">&nbsp;(a<sub>n-1</sub>/a<sub>n</sub>)<sup>2</sup> - 2(a<sub>n-2</sub>/a<sub>n</sub>)&nbsp;</span>
+                </span><br><br>`);
       this.an = this.find_coefficient(this.eqn);
       //console.log(this.an);
       this
         .write_to_screen(`|x<sub>max</sub><sup>*</sup>| = <span style="white-space: nowrap;">
-            &radic;<span class="border-t border-black">&nbsp;(${this.an[1]}/${this.an[0]})<sup>2</sup> - 2(${this.an[2]}/${this.an[0]})&nbsp;</span>
-            </span><br><br>`);
+                &radic;<span class="border-t border-black">&nbsp;(${this.an[1]}/${this.an[0]})<sup>2</sup> - 2(${this.an[2]}/${this.an[0]})&nbsp;</span>
+                </span><br><br>`);
 
       let temp = this.calculate("((a1/a0)^2-2(a2/a0))^(1/2)", [
         { var: "a0", val: `(${this.an[0]})` },
@@ -213,4 +213,4 @@ class Bisection extends layout {
   }
 }
 
-export { Bisection };
+export { false_position };
