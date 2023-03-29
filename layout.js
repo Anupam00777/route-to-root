@@ -7,6 +7,7 @@ export class layout extends calculator {
     layout_num++;
     this.parent = parent;
     this.container;
+    this.container_num;
     this.que;
     this.ans;
     this.equation_container;
@@ -47,7 +48,7 @@ export class layout extends calculator {
         <div class="flex items-center justify-center  col-start-9 col-span-2 row-start-2 border-t">
         <input type="number" id="stopNo${layout_num}" placeholder="E or N" class="w-[70%] h-full border-0 text-center outline-0" ></div> 
 
-        <button id="solve${layout_num}" class="flex items-center justify-center  col-start-1 col-span-2 row-start-2 border border-black bg-green-400 w-full  font-bold cursor-pointer my-[2px]">Solve</button>
+        <button type="button" id="solve${layout_num}" class="flex items-center justify-center  col-start-1 col-span-2 row-start-2 border border-black bg-green-400 w-full  font-bold cursor-pointer my-[2px]">Solve</button>
 
         <div class="flex items-center justify-center  col-start-3 col-span-2 row-start-2 border-r">x1:
         <input type="number" id="x1${layout_num}" placeholder="x1" class="w-[70%] h-full border-0 text-center outline-0" ></div> 
@@ -64,6 +65,7 @@ export class layout extends calculator {
 
     this.parent.innerHTML += container;
     this.container = document.querySelector(`#layout${layout_num}`);
+    this.container_num = layout_num;
     this.container.innerHTML += que;
     this.container.innerHTML += ans;
 
@@ -78,8 +80,8 @@ export class layout extends calculator {
 
     this.ans = document.querySelector(`#ans${layout_num}`);
   }
-  destroy() {
-    layout_num = 0;
-    this.container.remove();
+  destroy() { 
+    layout_num--;
+    document.querySelector(`#layout${this.container_num}`).remove(); 
   }
 }

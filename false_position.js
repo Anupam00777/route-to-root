@@ -1,10 +1,14 @@
 import { layout } from "./layout";
 
-class false_position extends layout {
-  constructor(parent, callback = null) {
+class False_Position extends layout {
+  constructor(parent, buffer_array = undefined, callback = null) {
     super(parent);
     this.solve_btn.addEventListener("click", () => {
-      this.solve();
+      try{
+        this.solve();
+      }catch{
+        this.write_to_screen(`<b style="color: red;">Something went wrong. Please check your Equation again and retry or try to guess values of x<sub>1</sub> and x<sub>2</sub> correctly.</b>`);
+      }
     });
     this.soln = "";
     this.x3_input.setAttribute("disabled", true);
@@ -19,15 +23,31 @@ class false_position extends layout {
     this.stopping_criterion;
     this.iteration_num = 0;
     this.cBack = callback;
+    buffer_array.push(this);
+    console.log(buffer_array);
   }
   callback(c) {
     c();
   }
   clear_attributes() {
-    this.iteration_num = 0;
+    this.iteration_num = 0; 
   }
-  x_0(x1, x2) {
-    return eval(`(${x1} + ${x2}) / 2`);
+  next_x(x1, x2, f1, f2) {
+    return this.calculate(`(x1)-(((f1)*((x2)-(x1)))/((f2)-(f1)))`, [
+      {
+        var:"x1",
+        val:x1
+      },{
+        var:"x2",
+        val:x2
+      },{
+        var:"f1",
+        val:f1
+      },{
+        var:"f2",
+        val:f2
+      }
+    ]);
   }
 
   fx(v) {
@@ -50,7 +70,7 @@ class false_position extends layout {
         return this.iteration_num < E && E > 0;
         break;
       case 2:
-        this.x0 = this.x_0(this.x1, this.x2);
+        this.x0 = this.next_x(this.x1, this.x2, this.f1, this.f2);
         return !(this.fx(this.x0) < E && this.fx(this.x0) > 0);
         break;
       case 3:
@@ -79,10 +99,10 @@ class false_position extends layout {
     this.write_to_screen(`<b>ITERATION 1 :</b><br>`);
     while (this.stop(s, E)) {
       this.iteration_num++;
-      this.x0 = this.x_0(this.x1, this.x2);
-      this.f0 = this.fx(this.x0);
       this.f1 = this.fx(this.x1);
       this.f2 = this.fx(this.x2);
+      this.x0 = this.next_x(this.x1, this.x2, this.f1, this.f2);
+      this.f0 = this.fx(this.x0);
       if (this.f1 == 0) {
         this.print_ans(this.x1);
         return;
@@ -102,7 +122,7 @@ class false_position extends layout {
         }
       }
       this.write_to_screen(
-        `x<sub>0</sub> = (x<sub>1</sub> + x<sub>2</sub>)/2<br>x<sub>0</sub> = (${this.x1} + ${this.x2})/2<br>x<sub>0</sub> = ${this.x0}<br><br>f(x<sub>0</sub>) = ${this.eqn}<br>f(x<sub>0</sub>) = ${this.f0}<br><br>`
+        `x<sub>0</sub> = x<sub>1</sub> - f(x<sub>1</sub>)(x<sub>2</sub>-x<sub>1</sub>)/f(x<sub>2</sub>)-f(x<sub>1</sub>)<br>x<sub>0</sub> = ${this.x1} - ${this.f1}(${this.x2} - ${this.x1})/(${this.f2} - ${this.f1})<br>x<sub>0</sub> = ${this.x0}<br><br>f(x<sub>0</sub>) = ${this.eqn}<br>f(x<sub>0</sub>) = ${this.f0}<br><br>`
       );
       if (this.f0 == 0) {
         this.print_ans(this.x0);
@@ -151,11 +171,14 @@ class false_position extends layout {
     this.soln = "";
     this.clear_ans();
     this.clear_attributes();
-    this.eqn = this.equation_container.value;
-    //console.log(this.eqn);
+    this.eqn = this.equation_container.value; 
     if (this.eqn == "" || this.stopNo_container.value == "") {
       return;
     }
+    if(!this.validate(this.eqn, ['x'])){
+      this.write_to_screen( `<b style="color: red;">Something went wrong. Please check the Equation again and retry.</b>`);
+      return;
+    };
     this.x1 = this.x1_input.value;
     this.x2 = this.x2_input.value;
     this.write_to_screen(`Given:<br>&emsp;f(x) = ${this.eqn}<br><br>`);
@@ -201,7 +224,7 @@ class false_position extends layout {
         return;
       }
       this.write_to_screen(
-        `&emsp;x<sub>1</sub> = ${this.x2}<br>&emsp;x<sub>2</sub> = ${
+        `&emsp;x<sub>1</sub> = ${this.x1}<br>&emsp;x<sub>2</sub> = ${
           this.x2
         }<br>&emsp;f(x<sub>1</sub>) = ${this.fx(
           this.x1
@@ -209,8 +232,8 @@ class false_position extends layout {
       );
     }
     this.stopping_criterion = this.stopCr_container.value;
-    this.iteration(this.stopping_criterion, this.stopNo_container.value);
+    this.iteration(this.stopping_criterion, this.stopNo_container.value); 
   }
 }
 
-export { false_position };
+export { False_Position };

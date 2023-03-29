@@ -1,10 +1,14 @@
 import { layout } from "./layout";
 
 class Bisection extends layout {
-  constructor(parent, callback = null) {
+  constructor(parent, buffer_array = undefined, callback = null) {
     super(parent);
     this.solve_btn.addEventListener("click", () => {
-      this.solve();
+      try{
+        this.solve();
+      }catch{
+        this.write_to_screen(`<b style="color: red;">Something went wrong. Please check your Equation again and retry or try to guess values of x<sub>1</sub> and x<sub>2</sub> correctly.</b>`);
+      }
     });
     this.soln = "";
     this.x3_input.setAttribute("disabled", true);
@@ -19,6 +23,7 @@ class Bisection extends layout {
     this.stopping_criterion;
     this.iteration_num = 0;
     this.cBack = callback;
+    buffer_array.push(this);
   }
   callback(c) {
     c();
@@ -27,7 +32,7 @@ class Bisection extends layout {
     this.iteration_num = 0;
   }
   x_0(x1, x2) {
-    return eval(`(${x1} + ${x2}) / 2`);
+    return eval(`((${x1}) + (${x2})) / 2`);
   }
 
   fx(v) {
@@ -156,6 +161,10 @@ class Bisection extends layout {
     if (this.eqn == "" || this.stopNo_container.value == "") {
       return;
     }
+    if(!this.validate(this.eqn, ['x'])){
+      this.write_to_screen( `<b style="color: red;">Something went wrong. Please check the Equation again and retry.</b>`);
+      return;
+    };
     this.x1 = this.x1_input.value;
     this.x2 = this.x2_input.value;
     this.write_to_screen(`Given:<br>&emsp;f(x) = ${this.eqn}<br><br>`);

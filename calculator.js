@@ -1,6 +1,40 @@
 export class calculator {
   constructor() {}
+  validate(eq, array_of_var = []){
+    let inc = ['+','-','*','/','^','(',')'];
+    eq = eq.replace(/\s/g, "");
+    eq = eq.replace(/[0-9]/g, "");
+    let reg = new RegExp(`sin`, "g");
+      eq = eq.replace(reg, ``);
 
+      reg = new RegExp(`cos`, "g");
+      eq = eq.replace(reg, ``);
+
+      reg = new RegExp(`tan`, "g");
+      eq = eq.replace(reg, ``);
+
+      reg = new RegExp(`sec`, "g");
+      eq = eq.replace(reg, ``);
+
+      reg = new RegExp(`cosec`, "g");
+      eq = eq.replace(reg, ``);
+
+      reg = new RegExp(`cot`, "g");
+      eq = eq.replace(reg, ``);
+
+      reg = new RegExp(`log`, "g");
+      eq = eq.replace(reg, ``);
+      
+      reg = new RegExp(`e`, "g");
+      eq = eq.replace(reg, ``);
+
+      for (let i = 0; i < eq.length; i++) {
+        if(!inc.includes(eq[i]) && !array_of_var.includes(eq[i])){
+          return false;
+        }
+      }
+      return true;
+  }
   find_coefficient(eq) {
     try {
       let a = eq;

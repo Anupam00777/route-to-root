@@ -1,2 +1,3 @@
 import { Bisection } from "./bisection";
-export {Bisection};
+import { False_Position } from "./false_position";
+export {Bisection, False_Position};
