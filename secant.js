@@ -94,6 +94,10 @@ class Secant extends layout {
     this.write_to_screen(`<b>ITERATION 1 :</b><br>`);
     while (this.stop(s, E)) {
       this.iteration_num++;
+      if(this.iteration_num > 1000){
+        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`);
+        this.print_ans(this.x0);
+      }
       if (this.iteration_num != 1) { 
           this.write_to_screen(
             `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>1</sub> = x<sub>2</sub> = ${this.x2}<br>x<sub>2</sub> = x<sub>3</sub> = ${this.x3}<br>f(x<sub>1</sub>) = f(x<sub>2</sub>) = ${this.f2}<br>f(x<sub>2</sub>) = f(x<sub>3</sub>) = ${this.f3}<br><br>`

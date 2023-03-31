@@ -90,6 +90,10 @@ class Bisection extends layout {
     this.write_to_screen(`<b>ITERATION 1 :</b><br>`);
     while (this.stop(s, E)) {
       this.iteration_num++;
+      if(this.iteration_num > 1000){
+        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`);
+        this.print_ans(this.x0);
+      }
       this.x0 = this.x_0(this.x1, this.x2);
       this.f0 = this.fx(this.x0);
       this.f1 = this.fx(this.x1);
