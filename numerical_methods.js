@@ -1,4 +1,4 @@
-import { Bisection } from "./bisection";
-import { False_Position } from "./false_position";
-import { Secant } from "./secant";
+import { Bisection } from "./bisection.js";
+import { False_Position } from "./false_position.js";
+import { Secant } from "./secant.js";
 export {Bisection, False_Position, Secant};

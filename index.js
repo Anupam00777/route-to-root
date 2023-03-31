@@ -1,4 +1,4 @@
-import * as Method from "./numerical_methods";
+import * as Method from "./numerical_methods.js";
 
 const startPage = document.querySelector(".startPage");
 const screen = document.querySelector(".screen"); 

@@ -1,4 +1,4 @@
-import { calculator } from "./calculator";
+import { calculator } from "./calculator.js";
 export class layout extends calculator {
   constructor(parent) {
     super();

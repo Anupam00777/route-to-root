@@ -1,4 +1,4 @@
-import { layout } from "./layout";
+import { layout } from "./layout.js";
 
 class False_Position extends layout {
   constructor(parent, buffer_array = undefined, callback = null) {
