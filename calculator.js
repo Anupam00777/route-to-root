@@ -85,8 +85,9 @@ export class calculator {
   calculate(e, val) {
     let eq = e;
     let reg;
-    eq = eq.replace(/\s/g, "");
+    eq = eq.replace(/\s/g, ""); 
     val.forEach((element) => {
+      element.val = Number(element.val);
       reg = new RegExp(`sin${element.var}`, "g");
       eq = eq.replace(reg, `(${Math.sin(element.val)})`);
 
@@ -109,7 +110,7 @@ export class calculator {
       eq = eq.replace(reg, `(${Math.log10(element.val)})`);
     });
     eq = eq.replace(/\^/g, "**");
-    eq = eq.replace(/e/g, Math.exp(1));
+    eq = eq.replace(/e/g, `(${Math.exp(1)})`);
 
     let ext = ["+", "-", "*", "^", "/"];
     val.forEach((element) => {
@@ -135,8 +136,7 @@ export class calculator {
             eq.slice([eq.indexOf(`${element.var}`) + 1]);
         }
         reg = new RegExp(`${element.var}`);
-        eq = eq.replace(reg, element.val);
-        //console.log(eq);
+        eq = eq.replace(reg, `(${element.val})`);
       }
     });
     for (let i = 0; i < eq.length; i++) {
@@ -150,14 +150,9 @@ export class calculator {
           eq = eq.slice(0, [i + 1]) + "*" + eq.slice([i + 1]);
           i++;
         }
-      }
-      //console.log(eq);
+      } 
     }
     return eval(eq);
   }
 }
 
-// const cc = new calculator();
-// //console.log(cc.calculate("x^2-4(x)-10",[
-//     {var: "x", val: "(5-1)"}
-// ]))

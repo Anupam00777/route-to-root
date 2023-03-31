@@ -23,8 +23,7 @@ class False_Position extends layout {
     this.stopping_criterion;
     this.iteration_num = 0;
     this.cBack = callback;
-    buffer_array.push(this);
-    console.log(buffer_array);
+    buffer_array.push(this); 
   }
   callback(c) {
     c();
@@ -51,7 +50,7 @@ class False_Position extends layout {
   }
 
   fx(v) {
-    return this.calculate(this.eqn, [{ var: "x", val: `(${v})` }]);
+    return this.calculate(this.eqn, [{ var: "x", val: v }]);
   }
 
   write_to_screen(s) {
@@ -67,22 +66,22 @@ class False_Position extends layout {
   stop(s, E) {
     switch (s) {
       case 1:
-        return this.iteration_num < E && E > 0;
+        return this.iteration_num < E;
         break;
       case 2:
-        this.x0 = this.next_x(this.x1, this.x2, this.f1, this.f2);
-        return !(this.fx(this.x0) < E && this.fx(this.x0) > 0);
+        this.x3 = this.next_x(this.x1, this.x2, this.f1, this.f2);
+        return !(this.fx(this.x3) < E && this.fx(this.x3) > 0);
         break;
       case 3:
         return (
-          this.calculate(`(x2-x1)/x2`, [
+          this.calculate(`((x2)-(x1))/(x2)`, [
             {
               var: "x1",
-              val: `(${this.x1})`,
+              val: this.x1,
             },
             {
               var: "x2",
-              val: `(${this.x2})`,
+              val: this.x2,
             },
           ]) > E
         );
@@ -90,8 +89,8 @@ class False_Position extends layout {
     }
   }
   iteration(c, n) {
-    let s = eval(c);
-    let E = eval(n);
+    let s = Number(c);
+    let E = Number(n);
     let temp = {
       x: { var: "", this: "", to_this: "", val: 0 },
       f: { var: "", this: "", to_this: "", val: 0 },
@@ -174,22 +173,41 @@ class False_Position extends layout {
     this.eqn = this.equation_container.value; 
     if (this.eqn == "" || this.stopNo_container.value == "") {
       return;
-    }
-    if(!this.validate(this.eqn, ['x'])){
+    }else if(!this.validate(this.eqn, ['x'])){
       this.write_to_screen( `<b style="color: red;">Something went wrong. Please check the Equation again and retry.</b>`);
       return;
-    };
+    }else { 
+        switch (this.stopCr_container.value) {
+            case '1':
+                this.stopNo_container.value = (Number(this.stopNo_container.value).toFixed());
+                if(Number(this.stopNo_container.value) <= 0){
+                    this.write_to_screen(`<b style="color:red;">N must be greater than 0</b>`);
+                    return;
+                }
+                break;
+            case '2': 
+                if(Number(this.stopNo_container.value) <= 0){
+                    this.write_to_screen(`<b style="color:red;">E must be greater than 0</b>`);
+                    return;
+                }
+                break;
+            case '3':
+                if(Number(this.stopNo_container.value) <= 0){
+                    this.write_to_screen(`<b style="color:red;">E must be greater than 0</b>`);
+                    return;
+                }
+                break; 
+        } 
+    }
     this.x1 = this.x1_input.value;
     this.x2 = this.x2_input.value;
-    this.write_to_screen(`Given:<br>&emsp;f(x) = ${this.eqn}<br><br>`);
-    //console.log(this.x1, this.x2);
+    this.write_to_screen(`Given:<br>&emsp;f(x) = ${this.eqn}<br><br>`); 
     if (this.x1 == "" || this.x2 == "") {
       this
         .write_to_screen(`Since x<sub>1</sub> and x<sub>2</sub> are not given, we will find the interval using following formula:<br>We know that:<br><br>|x<sub>max</sub><sup>*</sup>| = <span style="white-space: nowrap;">
                 &radic;<span class="border-t border-black">&nbsp;(a<sub>n-1</sub>/a<sub>n</sub>)<sup>2</sup> - 2(a<sub>n-2</sub>/a<sub>n</sub>)&nbsp;</span>
                 </span><br><br>`);
-      this.an = this.find_coefficient(this.eqn);
-      //console.log(this.an);
+      this.an = this.find_coefficient(this.eqn); 
       this
         .write_to_screen(`|x<sub>max</sub><sup>*</sup>| = <span style="white-space: nowrap;">
                 &radic;<span class="border-t border-black">&nbsp;(${this.an[1]}/${this.an[0]})<sup>2</sup> - 2(${this.an[2]}/${this.an[0]})&nbsp;</span>
