@@ -66,7 +66,7 @@ const load_start_menu = (obj) => {
   startPage.innerHTML = "";
   obj.forEach((node) => {
     let child = document.createElement("button");
-    child.setAttribute("class", "w-[40%] min-w-[120px] h-max p-2 bg-blue-700 border-[3px] border-t-black border-l-black border-b-gray-500 border-r-gray-500 font-mono font-semibold text-lg text-clip text-center flex  items-center justify-center my-3 hover:bg-green-400 transition-[all]  duration-[1500]");
+    child.setAttribute("class", "w-[40%] min-w-[200px] h-max p-2 bg-[#ff9933] border-[3px] border-t-black border-l-black border-b-gray-500 border-r-gray-500 shadow-black shadow-lg font-mono font-semibold text-lg text-clip text-center flex  items-center justify-center my-3 hover:bg-green-400 transition-[all]  duration-[1500]");
     child.setAttribute("type", "button");
     child.setAttribute("id", node.id);
     child.setAttribute("title", node.title);
@@ -87,6 +87,10 @@ const load_start_menu = (obj) => {
     hide_start_menu();
     secant();
   });
+  document.querySelector(`#newton_raphson_method`).addEventListener("click", () => {
+    hide_start_menu();
+    newton_raphson();
+  });
 };
 
 const reset = () => {  
@@ -94,13 +98,21 @@ const reset = () => {
     obj.destroy();
   });
   object_buffer.bisection_method.objects=[];
+
   object_buffer.false_position_method.objects.forEach(obj => {
     obj.destroy(); 
   })
-  object_buffer.false_position_method.objects=[];object_buffer.secant_method.objects.forEach(obj => {
+  object_buffer.false_position_method.objects=[];
+
+  object_buffer.secant_method.objects.forEach(obj => {
     obj.destroy(); 
   })
   object_buffer.secant_method.objects=[];
+
+  object_buffer.newton_raphson_method.objects.forEach(obj => {
+    obj.destroy(); 
+  }) 
+  object_buffer.newton_raphson_method.objects=[];
   show_start_menu();
 };
 restart.addEventListener("click", () => {
@@ -117,13 +129,12 @@ const secant = () => {
   let x = new Method.Secant(screen,object_buffer.secant_method.objects, secant);  
 };
 const newton_raphson = () => {
-  let x = new Method.Bisection(screen, bisection);
-  object_buffer.bisection_method.objects.push(x); 
+  let x = new Method.NewtonRaphson(screen,object_buffer.newton_raphson_method.objects, newton_raphson); 
 };
-const mullers = () => {
-  let x = new Method.Bisection(screen, bisection);
-  object_buffer.bisection_method.objects.push(x); 
-};
+// const mullers = () => {
+//   let x = new Method.Bisection(screen, bisection);
+//   object_buffer.bisection_method.objects.push(x); 
+// };
 
 ////////////main/////////
 

@@ -29,11 +29,11 @@ export class layout extends calculator {
         </div>`;
     let que = `<div id="que${layout_num}" class="grid w-full grid-cols-10 grid-rows-2 h-max min-h-[70px] text-sm text-center text-clip content-center border-b">
 
-        <div class="flex items-center justify-center col-start-1 col-span-2 row-start-1 border border-black w-full bg-slate-400 font-bold cursor-pointer my-[2px]">Que No.${layout_num}} </div>
+        <div class="flex items-center justify-center col-start-1 col-span-2 row-start-1 border border-black shadow-black shadow-sm w-full bg-slate-400 font-bold cursor-pointer my-[2px]">Que No.${layout_num}} </div>
 
         <div class="flex items-center justify-center  col-start-3 col-span-6 row-start-1 ">
 
-        <input type="text" id="eqn${layout_num}" class="w-full h-full border-0 text-center outline-0" placeholder="Write your Equation here">
+        <input type="text" id="eqn${layout_num}" class="w-full lowercase h-full border-0 text-center outline-0" placeholder="Write your Equation here">
 
         </div> 
 
@@ -48,7 +48,7 @@ export class layout extends calculator {
         <div class="flex items-center justify-center  col-start-9 col-span-2 row-start-2 border-t">
         <input type="number" id="stopNo${layout_num}" placeholder="E or N" class="w-[70%] h-full border-0 text-center outline-0" ></div> 
 
-        <button type="button" id="solve${layout_num}" class="flex items-center justify-center  col-start-1 col-span-2 row-start-2 border border-black bg-green-400 w-full  font-bold cursor-pointer my-[2px]">Solve</button>
+        <button type="button" id="solve${layout_num}" class="flex items-center justify-center  col-start-1 col-span-2 row-start-2 border border-black bg-[#ff9933] shadow-black shadow-sm w-full  font-bold cursor-pointer my-[2px]">Solve</button>
 
         <div class="flex items-center justify-center  col-start-3 col-span-2 row-start-2 border-r">x1:
         <input type="number" id="x1${layout_num}" placeholder="x1" class="w-[70%] h-full border-0 text-center outline-0" ></div> 

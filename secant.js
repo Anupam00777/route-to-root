@@ -32,18 +32,18 @@ class Secant extends layout {
     this.iteration_num = 0; 
   }
   next_x(x1, x2, f1, f2) {
-    return this.calculate(`(x2)-(((f2)*((x2)-(x1)))/((f2)-(f1)))`, [
+    return this.calculate(`(b)-(((d)*((b)-(a)))/((d)-(c)))`, [
       {
-        var:"x1",
+        var:"a",
         val:x1
       },{
-        var:"x2",
+        var:"b",
         val:x2
       },{
-        var:"f1",
+        var:"c",
         val:f1
       },{
-        var:"f2",
+        var:"d",
         val:f2
       }
     ]);
@@ -74,13 +74,13 @@ class Secant extends layout {
         break;
       case 3:
         return (
-          this.calculate(`((x2)-(x1))/(x2)`, [
+          this.calculate(`((y)-(x))/(y)`, [
             {
-              var: "x1",
+              var: "x",
               val: this.x1,
             },
             {
-              var: "x2",
+              var: "y",
               val: this.x2,
             },
           ]) > E
@@ -124,7 +124,7 @@ class Secant extends layout {
     this.soln = "";
     this.clear_ans();
     this.clear_attributes();
-    this.eqn = this.equation_container.value;  
+    this.eqn = this.equation_container.value.toLowerCase().replace(/\s/g, "");  
     if (this.eqn == "" || this.stopNo_container.value == "") {
       return;
     }else if(!this.validate(this.eqn, ['x'])){
@@ -154,7 +154,9 @@ class Secant extends layout {
         } 
     }
     this.x1 = this.x1_input.value;
+    this.x1=this.x1.replace(/\s/g, "");
     this.x2 = this.x2_input.value;
+    this.x2=this.x2.replace(/\s/g, ""); 
     this.write_to_screen(`Given:<br>&emsp;f(x) = ${this.eqn}<br><br>`); 
     if (this.x1 == "" || this.x2 == "") {
         this.x1 = 0;

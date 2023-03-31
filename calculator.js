@@ -1,6 +1,17 @@
 export class calculator {
   constructor() {}
+
+  differentiate_eqn(eqn, v){
+    try{
+      let derivative = new math.derivative(eqn, v).toString().replace(/\s/g, "");
+      return derivative;
+    }catch{
+      return false;
+    }
+  }
+
   validate(eq, array_of_var = []){
+    eq = eq.toLowerCase();
     let inc = ['+','-','*','/','^','(',')'];
     eq = eq.replace(/\s/g, "");
     eq = eq.replace(/[0-9]/g, "");
@@ -37,7 +48,7 @@ export class calculator {
   }
   find_coefficient(eq) {
     try {
-      let a = eq;
+      let a = eq.toLowerCase().replace(/\s/g, "");
       let obj = [0, 0, 0];
       let ext = ["+", "-", "*", "/"];
       let n = 0;
@@ -57,10 +68,10 @@ export class calculator {
               n++;
               break;
             }
-          }
+          } 
         } else if (a[i] == "x" && i == 0) {
           obj[n] = "1";
-          n++;
+          n++; 
         }
       }
       return obj;
@@ -83,7 +94,8 @@ export class calculator {
   }
 
   calculate(e, val) {
-    let eq = e;
+    let eq = e.toLowerCase();
+    console.log(eq);
     let reg;
     eq = eq.replace(/\s/g, ""); 
     val.forEach((element) => {
@@ -111,7 +123,6 @@ export class calculator {
     });
     eq = eq.replace(/\^/g, "**");
     eq = eq.replace(/e/g, `(${Math.exp(1)})`);
-
     let ext = ["+", "-", "*", "^", "/"];
     val.forEach((element) => {
       while (eq.indexOf(`${element.var}`) != -1) {
@@ -135,8 +146,10 @@ export class calculator {
             "*" +
             eq.slice([eq.indexOf(`${element.var}`) + 1]);
         }
+        console.log(eq);
         reg = new RegExp(`${element.var}`);
         eq = eq.replace(reg, `(${element.val})`);
+        console.log(eq);
       }
     });
     for (let i = 0; i < eq.length; i++) {
@@ -151,7 +164,8 @@ export class calculator {
           i++;
         }
       } 
-    }
+    } 
+    console.log(eval(eq));
     return eval(eq);
   }
 }

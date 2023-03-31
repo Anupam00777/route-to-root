@@ -32,11 +32,11 @@ class Bisection extends layout {
     this.iteration_num = 0;
   }
   x_0(x1, x2) {
-    return this.calculate(`((x1) + (x2)) / 2`, [{
-      var: 'x1',
+    return this.calculate(`((x) + (y)) / 2`, [{
+      var: 'x',
       val: x1
     },{
-      var: 'x2',
+      var: 'y',
       val: x2
     }]);
   }
@@ -66,13 +66,13 @@ class Bisection extends layout {
         break;
       case 3:
         return (
-          this.calculate(`((x2)-(x1))/(x2)`, [
+          this.calculate(`((y)-(x))/(y)`, [
             {
-              var: "x1",
+              var: "x",
               val: this.x1,
             },
             {
-              var: "x2",
+              var: "y",
               val: this.x2,
             },
           ]) > E
@@ -166,7 +166,7 @@ class Bisection extends layout {
     this.soln = "";
     this.clear_ans();
     this.clear_attributes();
-    this.eqn = this.equation_container.value; 
+    this.eqn = this.equation_container.value.toLowerCase().replace(/\s/g, ""); 
     if (this.eqn == "" || this.stopNo_container.value == "") {
       return;
     }else if(!this.validate(this.eqn, ['x'])){
@@ -196,7 +196,9 @@ class Bisection extends layout {
         } 
     }
     this.x1 = this.x1_input.value;
+    this.x1=this.x1.replace(/\s/g, "");
     this.x2 = this.x2_input.value;
+    this.x2=this.x2.replace(/\s/g, ""); 
     this.write_to_screen(`Given:<br>&emsp;f(x) = ${this.eqn}<br><br>`); 
     if (this.x1 == "" || this.x2 == "") {
       this
@@ -209,11 +211,11 @@ class Bisection extends layout {
             &radic;<span class="border-t border-black">&nbsp;(${this.an[1]}/${this.an[0]})<sup>2</sup> - 2(${this.an[2]}/${this.an[0]})&nbsp;</span>
             </span><br><br>`);
 
-      let temp = this.calculate("((a1/a0)^2-2(a2/a0))^(1/2)", [
-        { var: "a0", val: `(${this.an[0]})` },
-        { var: "a1", val: `(${this.an[1]})` },
-        { var: "a2", val: `(${this.an[2]})` },
-      ]);
+            let temp = this.calculate("(((a1/a0)^2)-(2*(a2/a0)))^(1/2)", [
+              { var: "a0", val: this.an[0]},
+              { var: "a1", val: this.an[1]},
+              { var: "a2", val: this.an[2]},
+            ]);
       this.x1 = temp <= 0 ? temp : -temp;
       this.x2 = temp >= 0 ? temp : -temp;
       this.write_to_screen(
