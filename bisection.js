@@ -108,7 +108,7 @@ class Bisection extends layout {
         this.print_ans(this.x2);
         return;
       }
-      if (this.iteration_num != 1) { 
+      if (this.iteration_num != 1) {  
         if (temp.x.var == "x1") {
           this.write_to_screen(
             `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>2</sub> = ${this.x2}<br>f(x<sub>2</sub>) = ${this.f2}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
@@ -117,7 +117,10 @@ class Bisection extends layout {
           this.write_to_screen(
             `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>1</sub> = ${this.x1}<br>f(x<sub>1</sub>) = ${this.f1}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
           );
-        } 
+        }else{
+          this.write_to_screen( `<b style="color: red;">Something went wrong, please try another combinations of x<sub>1</sub> and x<sub>2</sub>.</b><br>`);
+          return;
+        }
       }
       this.write_to_screen(
         `x<sub>0</sub> = (x<sub>1</sub> + x<sub>2</sub>)/2<br>x<sub>0</sub> = (${this.x1} + ${this.x2})/2<br>x<sub>0</sub> = ${this.x0}<br><br>f(x<sub>0</sub>) = ${this.eqn}<br>f(x<sub>0</sub>) = ${this.f0}<br><br>`
@@ -242,7 +245,7 @@ class Bisection extends layout {
         return;
       }
       this.write_to_screen(
-        `&emsp;x<sub>1</sub> = ${this.x2}<br>&emsp;x<sub>2</sub> = ${
+        `&emsp;x<sub>1</sub> = ${this.x1}<br>&emsp;x<sub>2</sub> = ${
           this.x2
         }<br>&emsp;f(x<sub>1</sub>) = ${this.fx(
           this.x1

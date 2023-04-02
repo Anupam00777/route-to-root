@@ -125,6 +125,9 @@ class False_Position extends layout {
           this.write_to_screen(
             `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>1</sub> = ${this.x1}<br>f(x<sub>1</sub>) = ${this.f1}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
           );
+        }else{
+          this.write_to_screen( `<b style="color: red;">Something went wrong, please try another combinations of x<sub>1</sub> and x<sub>2</sub>.</b><br>`);
+          return;
         }
       }
       this.write_to_screen(
