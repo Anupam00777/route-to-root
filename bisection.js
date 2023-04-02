@@ -6,7 +6,8 @@ class Bisection extends layout {
     this.solve_btn.addEventListener("click", () => {
       try{
         this.solve();
-      }catch{
+      }catch(e){
+        console.log(e);
         this.write_to_screen(`<b style="color: red;">Something went wrong. Please check your Equation again and retry or try to guess values of x<sub>1</sub> and x<sub>2</sub> correctly.</b>`);
       }
     });
@@ -24,6 +25,8 @@ class Bisection extends layout {
     this.iteration_num = 0;
     this.cBack = callback;
     buffer_array.push(this);
+    if(layout_num == 1){
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto select initial values using formula for x<sub>max</sub> OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
   }
   callback(c) {
     c();
@@ -61,7 +64,7 @@ class Bisection extends layout {
         return this.iteration_num < E;
         break;
       case 2:
-        this.x3 = this.next_x(this.x1, this.x2, this.f1, this.f2);
+        this.x3 = this.x_0(this.x1, this.x2);
         return !(this.fx(this.x3) < E && this.fx(this.x3) > 0);
         break;
       case 3:
@@ -86,13 +89,13 @@ class Bisection extends layout {
     let temp = {
       x: { var: "", this: "", to_this: "", val: 0 },
       f: { var: "", this: "", to_this: "", val: 0 },
-    };
+    }; 
     this.write_to_screen(`<b>ITERATION 1 :</b><br>`);
     while (this.stop(s, E)) {
       this.iteration_num++;
       if(this.iteration_num > 1000){
-        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`);
-        this.print_ans(this.x0);
+        this.write_to_screen( `<b style="color: red;">Interrupted: Iterations are currently capped at 1000.</b><br>`);
+        break;
       }
       this.x0 = this.x_0(this.x1, this.x2);
       this.f0 = this.fx(this.x0);
@@ -105,7 +108,7 @@ class Bisection extends layout {
         this.print_ans(this.x2);
         return;
       }
-      if (this.iteration_num != 1) {
+      if (this.iteration_num != 1) { 
         if (temp.x.var == "x1") {
           this.write_to_screen(
             `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>2</sub> = ${this.x2}<br>f(x<sub>2</sub>) = ${this.f2}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
@@ -114,7 +117,7 @@ class Bisection extends layout {
           this.write_to_screen(
             `<b>ITERATION ${this.iteration_num} :</b><br>x<sub>1</sub> = ${this.x1}<br>f(x<sub>1</sub>) = ${this.f1}<br>${temp.x.this}= ${temp.x.to_this} = ${temp.x.val}<br>${temp.f.this} = ${temp.f.to_this} = ${temp.f.val}<br><br>`
           );
-        }
+        } 
       }
       this.write_to_screen(
         `x<sub>0</sub> = (x<sub>1</sub> + x<sub>2</sub>)/2<br>x<sub>0</sub> = (${this.x1} + ${this.x2})/2<br>x<sub>0</sub> = ${this.x0}<br><br>f(x<sub>0</sub>) = ${this.eqn}<br>f(x<sub>0</sub>) = ${this.f0}<br><br>`
@@ -139,7 +142,7 @@ class Bisection extends layout {
           this: `f(x<sub>2</sub>)`,
           to_this: `f(x<sub>0</sub>)`,
           val: this.f0,
-        };
+        };  
       } else if (this.f0 * this.f2 < 0) {
         this.write_to_screen(
           `Since f(x<sub>0</sub>)*f(x<sub>2</sub>) < 0, the root lies between interval (${this.x0}, ${this.x2})<br><br>`
@@ -157,7 +160,7 @@ class Bisection extends layout {
           to_this: `f(x<sub>0</sub>)`,
           val: this.f0,
         };
-      }
+      } 
     }
     this.print_ans(this.x0);
   }
@@ -211,17 +214,16 @@ class Bisection extends layout {
             &radic;<span class="border-t border-black">&nbsp;(${this.an[1]}/${this.an[0]})<sup>2</sup> - 2(${this.an[2]}/${this.an[0]})&nbsp;</span>
             </span><br><br>`);
 
-            let temp = this.calculate("(((a1/a0)^2)-(2*(a2/a0)))^(1/2)", [
-              { var: "a0", val: this.an[0]},
-              { var: "a1", val: this.an[1]},
-              { var: "a2", val: this.an[2]},
-            ]);
+            let temp = this.calculate("(((y/x)^2)-(2*(z/x)))^(1/2)", [
+              { var: "x", val: this.an[0]},
+              { var: "y", val: this.an[1]},
+              { var: "z", val: this.an[2]},
+            ]); 
       this.x1 = temp <= 0 ? temp : -temp;
       this.x2 = temp >= 0 ? temp : -temp;
       this.write_to_screen(
         `|x<sub>max</sub><sup>*</sup>| = ${this.x2}<br><br>Therefore we have the interval (${this.x1}, ${this.x2}).<br><br>x<sub>1</sub> = ${this.x1} , x<sub>2</sub> = ${this.x2}<br><br>`
-      );
-      console.log(this.x1, this.x2);
+      ); 
       if (
         !this.checknum(this.x1) ||
         !this.checknum(this.x2) ||

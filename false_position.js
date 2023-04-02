@@ -4,8 +4,8 @@ class False_Position extends layout {
   constructor(parent, buffer_array = undefined, callback = null) {
     super(parent);
     this.solve_btn.addEventListener("click", () => {
-      try{
-        this.solve();
+      try{ 
+      this.solve();   
       }catch{
         this.write_to_screen(`<b style="color: red;">Something went wrong. Please check your Equation again and retry or try to guess values of x<sub>1</sub> and x<sub>2</sub> correctly.</b>`);
       }
@@ -24,6 +24,8 @@ class False_Position extends layout {
     this.iteration_num = 0;
     this.cBack = callback;
     buffer_array.push(this); 
+    if(layout_num == 1){
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable. Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto select initial values using formula for x<sub>max</sub> OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
   }
   callback(c) {
     c();
@@ -101,6 +103,7 @@ class False_Position extends layout {
       if(this.iteration_num > 1000){
         this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`);
         this.print_ans(this.x0);
+        break;
       }
       this.f1 = this.fx(this.x1);
       this.f2 = this.fx(this.x2);
@@ -170,7 +173,7 @@ class False_Position extends layout {
     this.print_ans(this.x0);
   }
 
-  solve() {
+  async solve() {
     this.soln = "";
     this.clear_ans();
     this.clear_attributes();
@@ -255,8 +258,8 @@ class False_Position extends layout {
         )}<br>&emsp;f(x<sub>2</sub>) = ${this.fx(this.x2)}<br><br>`
       );
     }
-    this.stopping_criterion = this.stopCr_container.value;
-    this.iteration(this.stopping_criterion, this.stopNo_container.value); 
+    this.stopping_criterion = this.stopCr_container.value;  
+      this.iteration(this.stopping_criterion, this.stopNo_container.value); 
   }
 }
 

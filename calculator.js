@@ -1,4 +1,4 @@
-export class calculator {
+ class calculator {
   constructor() {}
 
   differentiate_eqn(eqn, v){
@@ -8,7 +8,7 @@ export class calculator {
     }catch{
       return false;
     }
-  }
+  } 
 
   validate(eq, array_of_var = []){
     eq = eq.toLowerCase();
@@ -56,7 +56,7 @@ export class calculator {
         if (a[i] == "x" && i > 0) {
           for (let j = i - 1; j >= 0; j--) {
             if (ext.includes(a[j]) && j != i - 1) {
-              obj[n] = `(${a[j] + a.slice(j + 1, i)})`;
+              obj[n] = `${a[j] + a.slice(j + 1, i)}`;
               n++;
               break;
             } else if (j == 0) {
@@ -82,20 +82,20 @@ export class calculator {
   }
 
   checknum(test, range = null) {
-    if (test == NaN || test == undefined) {
-      if (range) {
-        if (range[0] > test || range[1] < test) {
-          return false;
-        }
-      }
+    let num = test.toString();
+    if (num == `NaN` || num == `undefined`) {
       return false;
+    }else if (range != null) {
+      if (range[0] > Number(test) || range[1] < Number(test)) {
+        return false;
+      }
     }
     return true;
   }
 
   calculate(e, val) {
     let eq = e.toLowerCase();
-    console.log(eq);
+    //console.log(eq);
     let reg;
     eq = eq.replace(/\s/g, ""); 
     val.forEach((element) => {
@@ -146,10 +146,10 @@ export class calculator {
             "*" +
             eq.slice([eq.indexOf(`${element.var}`) + 1]);
         }
-        console.log(eq);
+        //console.log(eq);
         reg = new RegExp(`${element.var}`);
         eq = eq.replace(reg, `(${element.val})`);
-        console.log(eq);
+        //console.log(eq);
       }
     });
     for (let i = 0; i < eq.length; i++) {
@@ -165,8 +165,9 @@ export class calculator {
         }
       } 
     } 
-    console.log(eval(eq));
+    //console.log(eval(eq));
     return eval(eq);
   }
 }
 
+export {calculator};

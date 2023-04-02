@@ -23,7 +23,10 @@ class Secant extends layout {
     this.stopping_criterion;
     this.iteration_num = 0;
     this.cBack = callback;
-    buffer_array.push(this); 
+    buffer_array.push(this);
+    if(layout_num == 1){ 
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto guess initial values OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.<br><b>5. Secant Method is not guaranteed to converge.</b>`)};
+  
   }
   callback(c) {
     c();
@@ -93,10 +96,10 @@ class Secant extends layout {
     let E = Number(n); 
     this.write_to_screen(`<b>ITERATION 1 :</b><br>`);
     while (this.stop(s, E)) {
-      this.iteration_num++;
+      this.iteration_num++; 
       if(this.iteration_num > 1000){
-        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`);
-        this.print_ans(this.x0);
+        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`); 
+        break;
       }
       if (this.iteration_num != 1) { 
           this.write_to_screen(

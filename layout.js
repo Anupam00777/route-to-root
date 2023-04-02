@@ -1,5 +1,5 @@
 import { calculator } from "./calculator.js";
-export class layout extends calculator {
+class layout extends calculator {
   constructor(parent) {
     super();
     globalThis.layout_num =
@@ -13,7 +13,7 @@ export class layout extends calculator {
     this.equation_container;
     this.stopCr_container;
     this.solve_btn;
-    this.append_layout();
+    this.append_layout();  
   }
 
   write_ans(str) {
@@ -22,6 +22,18 @@ export class layout extends calculator {
 
   clear_ans() {
     this.ans.innerHTML = "";
+  }
+  remove_dialogue(){ 
+    this.dialogue_container.style.display = "none";
+  }
+  launch_dialogue(elem , callback = null){ 
+    this.dialogue_container.style.display = "flex";
+    this.dialogue_box.innerHTML = elem;
+    
+    this.dialogue_close.addEventListener("click", ()=>{this.remove_dialogue()});
+    if(callback != null){
+      callback();
+    }
   }
 
   append_layout() {
@@ -62,12 +74,18 @@ export class layout extends calculator {
 
     let ans = `<div id="ans${layout_num}" class="w-full pl-8 min-h-[300px] h-max py-2 text-sm text-clip">
         </div>`;
-
-    this.parent.innerHTML += container;
-    this.container = document.querySelector(`#layout${layout_num}`);
-    this.container_num = layout_num;
-    this.container.innerHTML += que;
-    this.container.innerHTML += ans;
+        this.parent.innerHTML += container;
+        this.container = document.querySelector(`#layout${layout_num}`);
+        this.container_num = layout_num;
+        this.container.innerHTML += que;
+        this.container.innerHTML += ans;
+    if(layout_num == 1){
+    let dialogue = `<div id="dialogue_container" style="display:none;" class="flex items-center justify-center backdrop-blur-md w-full max-w-[612px] h-full fixed"><div draggable id="dialogue_box" class="bg-[#ff9933] w-[80%] min-w-[200px] my-auto justify-center max-w-[400px] min-h-[100px] h-max px-2 text-sm text-clip border border-black"></div><button id="dialogue_close" type="button" class="fixed top-2 right-2 aspect-square bg-red-400 border px-1 shadow-md shadow-black">&#x2715;</button></div>`;
+        this.container.innerHTML += dialogue;
+        this.dialogue_container = document.querySelector(`#dialogue_container`);
+        this.dialogue_box = document.querySelector(`#dialogue_box`);
+        this.dialogue_close = document.querySelector(`#dialogue_close`);
+        }
 
     this.que = document.querySelector(`#que${layout_num}`);
     this.equation_container = document.querySelector(`#eqn${layout_num}`);
@@ -81,7 +99,9 @@ export class layout extends calculator {
     this.ans = document.querySelector(`#ans${layout_num}`);
   }
   destroy() { 
-    layout_num--;
+    layout_num--; 
     document.querySelector(`#layout${this.container_num}`).remove(); 
   }
 }
+
+export {layout};
