@@ -38,7 +38,7 @@ class NewtonRaphson extends layout {
     buffer_array.push(this); 
     this.derivative;
     if(layout_num == 1) {
-    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Leave the Derivative field to automatically find derivative OR type it yourself.<br>3. Leave x<sub>1</sub> field empty to auto select initial value OR type the value yourself<br>4. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>. No need to put '= 0' at last.<br>2. Leave the Derivative field to automatically find derivative OR type it yourself.<br>3. Leave x<sub>1</sub> field empty to auto select initial value OR type the value yourself<br>4. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
   
   }
   callback(c) {

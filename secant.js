@@ -25,7 +25,7 @@ class Secant extends layout {
     this.cBack = callback;
     buffer_array.push(this);
     if(layout_num == 1){ 
-    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto guess initial values OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.<br><b>5. Secant Method is not guaranteed to converge.</b>`)};
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>. No need to put '= 0' at last.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto guess initial values OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.<br><b>5. Secant Method is not guaranteed to converge.</b>`)};
   
   }
   callback(c) {

@@ -25,7 +25,7 @@ class False_Position extends layout {
     this.cBack = callback;
     buffer_array.push(this); 
     if(layout_num == 1){
-    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable. Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto select initial values using formula for x<sub>max</sub> OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable. Use '^' for power like x^2 for x<sup>2</sup>. No need to put '= 0' at last.<br>2. Leave x<sub>1</sub> and x<sub>2</sub> empty to auto select initial values using formula for x<sub>max</sub> OR type the values yourself<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
   }
   callback(c) {
     c();
@@ -34,18 +34,18 @@ class False_Position extends layout {
     this.iteration_num = 0; 
   }
   next_x(x1, x2, f1, f2) {
-    return this.calculate(`(x)-(((e)*((y)-(x)))/((f)-(e)))`, [
+    return this.calculate(`(w)-(((y)*((x)-(w)))/((z)-(y)))`, [
       {
-        var:"x",
+        var:"w",
         val:x1
       },{
-        var:"y",
+        var:"x",
         val:x2
       },{
-        var:"e",
+        var:"y",
         val:f1
       },{
-        var:"f",
+        var:"z",
         val:f2
       }
     ]);
@@ -101,8 +101,7 @@ class False_Position extends layout {
     while (this.stop(s, E)) {
       this.iteration_num++;
       if(this.iteration_num > 1000){
-        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`);
-        this.print_ans(this.x0);
+        this.write_to_screen( `<b style="color: red;">Interrupted. Iterations are currently capped at 1000.</b>`); 
         break;
       }
       this.f1 = this.fx(this.x1);
@@ -234,8 +233,7 @@ class False_Position extends layout {
       this.x2 = temp >= 0 ? temp : -temp;
       this.write_to_screen(
         `|x<sub>max</sub><sup>*</sup>| = ${this.x2}<br><br>Therefore we have the interval (${this.x1}, ${this.x2}).<br><br>x<sub>1</sub> = ${this.x1} , x<sub>2</sub> = ${this.x2}<br><br>`
-      );
-      console.log(this.x1, this.x2);
+      ); 
       if (
         !this.checknum(this.x1) ||
         !this.checknum(this.x2) ||

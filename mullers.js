@@ -6,8 +6,7 @@ class Mullers extends layout {
     this.solve_btn.addEventListener("click", () => {
       try {
         this.solve();
-      } catch (e) {
-        console.log(e);
+      } catch (e) { 
         this.write_to_screen(
           `<b style="color: red;">Something went wrong. Please check your Equation again and retry or recheck values of x<sub>1</sub>, x<sub>2</sub> and x<sub>3</sub>.</b>`
         );
@@ -38,7 +37,7 @@ class Mullers extends layout {
     this.cBack = callback;
     buffer_array.push(this);
     if(layout_num == 1){
-    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>.<br>2. Enter x<sub>1</sub>, x<sub>2</sub> and x<sub>3</sub>.<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
+    this.launch_dialogue(`<h1 class="my-auto mt-2 text-xl text-center">How to use</h1><br>1. Type the Equation correctly in the Equation field with 'x' as the variable.Use '^' for power like x^2 for x<sup>2</sup>. No need to put '= 0' at last.<br>2. Enter x<sub>1</sub>, x<sub>2</sub> and x<sub>3</sub>.<br>3. Select Stopping Criteria from the drop-down and put in the value in below field. Enter N (Ex. 10) for number of iterations OR E (Ex. 0.001).<br>4. Click on solve to start solving.`)};
   }
   callback(c) {
     c();
@@ -58,8 +57,7 @@ class Mullers extends layout {
     let A2 = Number(a2);
     let num = -2 * A0;
     let x = (A1**2)-(4*A2*A0);
-    let y = Math.sqrt(x);
-    console.log(A0,A1,A2,x,y);
+    let y = Math.sqrt(x); 
     let denom = A1+y > A1-y ? A1+y : A1-y; 
     return num / denom;
   }
@@ -175,8 +173,7 @@ class Mullers extends layout {
     this.print_ans(this.x4);
   }
 
-  solve() {
-    //   console.log(1);
+  solve() { 
     this.soln = "";
     this.clear_ans();
     this.clear_attributes();

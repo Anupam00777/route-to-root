@@ -1,80 +1,61 @@
- class calculator {
+class calculator {
   constructor() {}
 
-  differentiate_eqn(eqn, v){
-    try{
-      let derivative = new math.derivative(eqn, v).toString().replace(/\s/g, "");
+  differentiate_eqn(eqn, v) {
+    try {
+      let derivative = new math.derivative(eqn, v)
+        .toString()
+        .replace(/\s/g, "");
       return derivative;
-    }catch{
+    } catch {
       return false;
     }
-  } 
+  }
 
-  validate(eq, array_of_var = []){
+  validate(eq, array_of_var = []) {
     eq = eq.toLowerCase();
-    let inc = ['+','-','*','/','^','(',')'];
+    let inc = ["+", "-", "*", "/", "^", "(", ")"];
     eq = eq.replace(/\s/g, "");
     eq = eq.replace(/[0-9]/g, "");
     let reg = new RegExp(`sin`, "g");
-      eq = eq.replace(reg, ``);
+    eq = eq.replace(reg, ``);
 
-      reg = new RegExp(`cos`, "g");
-      eq = eq.replace(reg, ``);
+    reg = new RegExp(`cos`, "g");
+    eq = eq.replace(reg, ``);
 
-      reg = new RegExp(`tan`, "g");
-      eq = eq.replace(reg, ``);
+    reg = new RegExp(`tan`, "g");
+    eq = eq.replace(reg, ``);
 
-      reg = new RegExp(`sec`, "g");
-      eq = eq.replace(reg, ``);
+    reg = new RegExp(`sec`, "g");
+    eq = eq.replace(reg, ``);
 
-      reg = new RegExp(`cosec`, "g");
-      eq = eq.replace(reg, ``);
+    reg = new RegExp(`cosec`, "g");
+    eq = eq.replace(reg, ``);
 
-      reg = new RegExp(`cot`, "g");
-      eq = eq.replace(reg, ``);
+    reg = new RegExp(`cot`, "g");
+    eq = eq.replace(reg, ``);
 
-      reg = new RegExp(`log`, "g");
-      eq = eq.replace(reg, ``);
-      
-      reg = new RegExp(`e`, "g");
-      eq = eq.replace(reg, ``);
+    reg = new RegExp(`log`, "g");
+    eq = eq.replace(reg, ``);
 
-      for (let i = 0; i < eq.length; i++) {
-        if(!inc.includes(eq[i]) && !array_of_var.includes(eq[i])){
-          return false;
-        }
+    reg = new RegExp(`e`, "g");
+    eq = eq.replace(reg, ``);
+
+    for (let i = 0; i < eq.length; i++) {
+      if (!inc.includes(eq[i]) && !array_of_var.includes(eq[i])) {
+        return false;
       }
-      return true;
+    }
+    return true;
   }
   find_coefficient(eq) {
     try {
-      let a = eq.toLowerCase().replace(/\s/g, "");
-      let obj = [0, 0, 0];
-      let ext = ["+", "-", "*", "/"];
-      let n = 0;
-      for (let i = 0; i < a.length; i++) {
-        if (a[i] == "x" && i > 0) {
-          for (let j = i - 1; j >= 0; j--) {
-            if (ext.includes(a[j]) && j != i - 1) {
-              obj[n] = `${a[j] + a.slice(j + 1, i)}`;
-              n++;
-              break;
-            } else if (j == 0) {
-              obj[n] = a.slice(0, i);
-              n++;
-              break;
-            } else if (ext.includes(a[j]) && j == i - 1) {
-              obj[n] = `${a[j]}1`;
-              n++;
-              break;
-            }
-          } 
-        } else if (a[i] == "x" && i == 0) {
-          obj[n] = "1";
-          n++; 
-        }
-      }
-      return obj;
+      const regex = /(?<!\^)([-+]?[0-9]*\.?[0-9]+)|(?<![0-9a-z])x/g;
+      const matches = eq.match(regex);
+      const coefficientsOrConstants = matches.map((match) =>
+        match === "x" ? "1" : match
+      );
+      return coefficientsOrConstants.slice(0, 3);
     } catch {
       alert("Please write the Equation properly.");
       return 0;
@@ -85,7 +66,7 @@
     let num = test.toString();
     if (num == `NaN` || num == `undefined`) {
       return false;
-    }else if (range != null) {
+    } else if (range != null) {
       if (range[0] > Number(test) || range[1] < Number(test)) {
         return false;
       }
@@ -95,9 +76,8 @@
 
   calculate(e, val) {
     let eq = e.toLowerCase();
-    //console.log(eq);
     let reg;
-    eq = eq.replace(/\s/g, ""); 
+    eq = eq.replace(/\s/g, "");
     val.forEach((element) => {
       element.val = Number(element.val);
       reg = new RegExp(`sin${element.var}`, "g");
@@ -146,10 +126,8 @@
             "*" +
             eq.slice([eq.indexOf(`${element.var}`) + 1]);
         }
-        //console.log(eq);
         reg = new RegExp(`${element.var}`);
         eq = eq.replace(reg, `(${element.val})`);
-        //console.log(eq);
       }
     });
     for (let i = 0; i < eq.length; i++) {
@@ -163,9 +141,8 @@
           eq = eq.slice(0, [i + 1]) + "*" + eq.slice([i + 1]);
           i++;
         }
-      } 
-    } 
-    //console.log(eval(eq));
+      }
+    }
     return eval(eq);
   }
 }
